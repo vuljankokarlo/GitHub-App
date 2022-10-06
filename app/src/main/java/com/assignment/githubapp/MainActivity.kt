@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                    StatusBarWrapper(30f) { //TODO globalRepository.statusBarHeight
+                    StatusBarWrapper(globalRepository.statusBarHeight) {
                         NavHost(
                             navController = navController,
                             startDestination = getFirstRoute(),
