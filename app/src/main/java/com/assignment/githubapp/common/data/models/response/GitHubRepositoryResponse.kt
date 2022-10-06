@@ -4,7 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GitHubRepositoriesResponse(
-    @SerialName("total_count")
-    val totalCount: Int
+data class GitHubRepositoryResponse(
+    @SerialName("name")
+    val repositoryName: String
+
 )

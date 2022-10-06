@@ -1,41 +1,79 @@
 package com.assignment.githubapp.features.home.presentation.repositories
 
-import android.util.Log
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.assignment.githubapp.GitHubApp
-import com.assignment.githubapp.common.view.navigation.Navigator
-import com.assignment.githubapp.ui.theme.OpenSansBold_16_24
+import com.assignment.githubapp.common.view.components.InputField
+import com.assignment.githubapp.common.view.components.TitleText
+import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
+import kotlinx.coroutines.delay
 
 @Composable
 fun RepositoriesMainScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: RepositoriesViewModel = hiltViewModel()
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-    ) {
-        Text(
-            "Repositories Main Screen",
-            style = MaterialTheme.typography.OpenSansBold_16_24,
-            color = MaterialTheme.colors.primary,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .clickable {
-                    navController.navigate(
-                        Navigator.Home.RepositoriesDetails()
-                    )
-                }
+    LaunchedEffect(key1 = viewModel.viewState.value.repositoryNameQuery) {
+        if (viewModel.viewState.value.repositoryNameQuery.isEmpty())
+            return@LaunchedEffect
 
-        )
+        delay(500)
+        viewModel.onQueryFieldValueChange()
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxSize()
+            .imePadding(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            TitleText(
+                text = "GitHub Repositories",
+                modifier = Modifier
+                    .padding(
+                        top = viewModel.viewState.value.statusBarHeight.dp + 10.dp,
+                        bottom = 20.dp
+                    )
+            )
+        }
+
+        item {
+            InputField(
+                placeholder = "GitHub repository name",
+                text = viewModel.viewState.value.repositoryNameQuery,
+                modifier = Modifier
+                    .padding(bottom = 20.dp),
+                errorMessage = viewModel.viewState.value.repositoryNameQueryError
+            ) { newValue ->
+                viewModel.viewState.value = viewModel.viewState.value.copy(
+                    repositoryNameQuery = newValue
+                )
+            }
+        }
+
+        viewModel.viewState.value.githubRepositoriesData?.items?.let { repositoryList ->
+            items(repositoryList) { repository ->
+                RepositoryItem(
+                    repository = repository,
+                    onAvatarClick = {
+                        //TODO
+                    },
+                    onDetailsClick = {
+                        //TODO
+                    }
+                )
+            }
+        }
     }
 }

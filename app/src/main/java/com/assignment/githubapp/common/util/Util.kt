@@ -4,7 +4,7 @@ import android.content.Context
 
 class Util {
     companion object {
-        fun test() = true
+
     }
 }
 

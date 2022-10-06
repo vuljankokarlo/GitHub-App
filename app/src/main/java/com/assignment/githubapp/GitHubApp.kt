@@ -1,7 +1,7 @@
 package com.assignment.githubapp
 
 import android.app.Application
-import com.assignment.githubapp.common.domain.dbmigration.DBMigrationHelper
+import com.assignment.githubapp.common.util.DBMigrationHelper
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration

@@ -3,7 +3,7 @@ package com.assignment.githubapp.common.data.dataSources
 import com.assignment.githubapp.common.data.dataSources.local.GitHubLocalSource
 import com.assignment.githubapp.common.data.dataSources.remote.GitHubAPI
 import com.assignment.githubapp.common.data.models.request.GitHubRepositoriesRequest
-import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesResponse
+import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesWrapperResponse
 import com.assignment.githubapp.common.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -17,10 +17,10 @@ class GitHubDataSource @Inject constructor(
     suspend fun repositories(
         repositoriesRequest: GitHubRepositoriesRequest,
     ) = flow {
-        var repositories: GitHubRepositoriesResponse? = null
+        var repositories: GitHubRepositoriesWrapperResponse? = null
         try {
             withContext(Dispatchers.IO) {
-                repositories = gitHubAPI.repositories(repositoriesRequest)
+                repositories = gitHubAPI.repositories(repositoriesRequest.query)
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unknown error"))
