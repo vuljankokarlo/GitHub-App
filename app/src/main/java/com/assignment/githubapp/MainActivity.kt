@@ -16,11 +16,18 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.assignment.githubapp.Graphs.homeGraph
+import com.assignment.githubapp.common.global.GlobalRepository
+import com.assignment.githubapp.common.util.dpFromPx
+import com.assignment.githubapp.common.view.components.wrappers.AppKeyboardFocusManager
+import com.assignment.githubapp.common.view.components.wrappers.StatusBarWrapper
+import com.assignment.githubapp.common.view.navigation.Graphs.homeGraph
+import com.assignment.githubapp.common.view.navigation.Graphs.introGraph
+import com.assignment.githubapp.common.view.navigation.Navigator
 import com.assignment.githubapp.ui.theme.GitHubAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @ExperimentalPagerApi
@@ -29,6 +36,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     lateinit var navController: NavHostController
+
+    @Inject
+    lateinit var globalRepository: GlobalRepository
 
     private fun adjustFontScale(configuration: Configuration) {
         configuration.fontScale = 1.0.toFloat()
@@ -47,8 +57,8 @@ class MainActivity : ComponentActivity() {
 
         val statusBarHeightId = resources.getIdentifier("status_bar_height", "dimen", "android")
         val statusBarHeight = resources.getDimensionPixelSize(statusBarHeightId)
-        //TODO add global repo
-//        globalRepository.statusBarHeight = statusBarHeight.dpFromPx(applicationContext)
+
+        globalRepository.statusBarHeight = statusBarHeight.dpFromPx(applicationContext)
 
         setContent {
             AppKeyboardFocusManager()
@@ -68,6 +78,7 @@ class MainActivity : ComponentActivity() {
                             startDestination = getFirstRoute(),
                             modifier = Modifier.navigationBarsPadding()
                         ) {
+                            introGraph(navController)
                             homeGraph(navController)
                         }
                     }
@@ -77,6 +88,6 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    private fun getFirstRoute() = Navigator.Home()
+    private fun getFirstRoute() = Navigator.Intro()
 }
 

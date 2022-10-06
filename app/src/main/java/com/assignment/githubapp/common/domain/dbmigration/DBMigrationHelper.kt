@@ -1,4 +1,4 @@
-package com.assignment.githubapp
+package com.assignment.githubapp.common.domain.dbmigration
 
 import android.util.Log
 import io.realm.DynamicRealm

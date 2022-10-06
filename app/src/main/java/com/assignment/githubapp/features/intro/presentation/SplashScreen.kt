@@ -1,4 +1,4 @@
-package com.assignment.githubapp
+package com.assignment.githubapp.features.intro.presentation
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.assignment.githubapp.GitHubApp
+import com.assignment.githubapp.common.view.navigation.Navigator
 import com.assignment.githubapp.ui.theme.OpenSansBold_16_24
 
 @Composable
@@ -29,7 +31,9 @@ fun SplashScreen(
             modifier = Modifier
                 .align(Alignment.Center)
                 .clickable {
-                    Log.i(GitHubApp.TAG, "Hello from splash screen")
+                    navController.navigate(
+                        Navigator.Home.RepositoriesMain()
+                    )
                 }
 
         )

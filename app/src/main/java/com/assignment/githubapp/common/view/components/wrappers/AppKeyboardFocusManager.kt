@@ -1,9 +1,10 @@
-package com.assignment.githubapp
+package com.assignment.githubapp.common.view.components.wrappers
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import com.assignment.githubapp.common.KeyBoardManager
 
 @Composable
 fun AppKeyboardFocusManager() {

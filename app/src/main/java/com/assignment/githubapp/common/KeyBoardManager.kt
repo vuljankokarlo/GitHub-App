@@ -1,4 +1,4 @@
-package com.assignment.githubapp
+package com.assignment.githubapp.common
 
 import android.app.Activity
 import android.content.Context

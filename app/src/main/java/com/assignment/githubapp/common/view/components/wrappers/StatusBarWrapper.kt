@@ -1,4 +1,4 @@
-package com.assignment.githubapp
+package com.assignment.githubapp.common.view.components.wrappers
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

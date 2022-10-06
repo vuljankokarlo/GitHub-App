@@ -1,4 +1,4 @@
-package com.assignment.githubapp
+package com.assignment.githubapp.common
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext

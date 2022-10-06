@@ -36,7 +36,7 @@ android {
 
             manifestPlaceholders = [appName: "GitHub App"]
 
-            buildConfigField "String", 'PROD', '"https://www"'
+            buildConfigField "String", 'REMOTE_BASE_URL', '"https://api.github.com/"'
 
             resValue "string", "name_of_app", "GitHub App"
         }
@@ -45,7 +45,7 @@ android {
             versionNameSuffix = "-debug"
             manifestPlaceholders = [appName: "@string/app_name"]
 
-            buildConfigField "String", 'TEST', '"https://www"'
+            buildConfigField "String", 'REMOTE_BASE_URL', '"https://api.github.com/"'
 
             resValue "string", "name_of_app", "GitHub App DEBUG"
         }
