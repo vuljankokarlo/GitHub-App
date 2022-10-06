@@ -31,6 +31,7 @@ fun SplashScreen(
                 .clickable {
                     Log.i(GitHubApp.TAG, "Hello from splash screen")
                 }
+
         )
     }
 }
