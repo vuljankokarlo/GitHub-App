@@ -1,4 +1,4 @@
-package com.assignment.githubapp.common.global.useCases
+package com.assignment.githubapp.common.global.domain.useCases
 
 import com.assignment.githubapp.common.data.repositories.GitHubRepository
 

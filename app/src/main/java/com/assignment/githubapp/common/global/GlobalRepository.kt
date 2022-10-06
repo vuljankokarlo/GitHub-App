@@ -1,7 +1,7 @@
 package com.assignment.githubapp.common.global
 
 import com.assignment.githubapp.common.PreferencesManager
-import com.assignment.githubapp.common.global.useCases.GlobalRepositoryUseCases
+import com.assignment.githubapp.common.global.domain.useCases.GlobalRepositoryUseCases
 import javax.inject.Inject
 
 class GlobalRepository @Inject constructor(

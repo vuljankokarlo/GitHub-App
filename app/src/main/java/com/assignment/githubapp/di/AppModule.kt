@@ -3,8 +3,8 @@ package com.assignment.githubapp.di
 import com.assignment.githubapp.common.PreferencesManager
 import com.assignment.githubapp.common.data.repositories.GitHubRepository
 import com.assignment.githubapp.common.global.GlobalRepository
-import com.assignment.githubapp.common.global.useCases.GlobalRepositoryUseCases
-import com.assignment.githubapp.common.global.useCases.TempUseCase
+import com.assignment.githubapp.common.global.domain.useCases.GlobalRepositoryUseCases
+import com.assignment.githubapp.common.global.domain.useCases.TempUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
