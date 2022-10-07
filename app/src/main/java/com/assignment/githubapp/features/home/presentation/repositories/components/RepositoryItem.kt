@@ -12,9 +12,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +36,10 @@ fun RepositoryItem(
     onDetailsClick: (GitHubRepositoryResponse) -> Unit,
 ) {
     val isSecondaryInfoShown = remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = repository) {
+        isSecondaryInfoShown.value = false
+    }
 
     Card(
         modifier = Modifier
@@ -65,7 +67,11 @@ fun RepositoryItem(
                 )
 
                 Icon(
-                    painterResource(if (isSecondaryInfoShown.value) R.drawable.ic_up else R.drawable.ic_down),
+                    painterResource(
+                        if (isSecondaryInfoShown.value)
+                            R.drawable.ic_up
+                        else
+                            R.drawable.ic_down),
                     contentDescription = "icon up/down",
                     modifier = Modifier
                         .padding(end = 10.dp, top = 10.dp)

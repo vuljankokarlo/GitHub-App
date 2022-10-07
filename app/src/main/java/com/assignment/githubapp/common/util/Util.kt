@@ -1,6 +1,7 @@
 package com.assignment.githubapp.common.util
 
 import android.content.Context
+import androidx.compose.foundation.lazy.LazyListState
 import com.assignment.githubapp.common.util.Util.Companion.API_DATE_FORMAT
 import com.assignment.githubapp.common.util.Util.Companion.PRESENTATION_DATE_FORMAT
 import java.text.SimpleDateFormat
@@ -30,3 +31,5 @@ fun Date.parseToPresentationFormat(): String =
 fun String.getDate(format: String = API_DATE_FORMAT): Date {
     return SimpleDateFormat(format).parse(this)
 }
+
+fun LazyListState.isScrolledToTheEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1

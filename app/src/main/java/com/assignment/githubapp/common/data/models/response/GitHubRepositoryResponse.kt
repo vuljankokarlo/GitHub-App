@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GitHubRepositoryResponse(
+    @SerialName("id")
+    val id: Int,
     @SerialName("name")
     val repositoryName: String,
     @SerialName("owner")

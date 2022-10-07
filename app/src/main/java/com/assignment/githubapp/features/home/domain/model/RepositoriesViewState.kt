@@ -1,10 +1,13 @@
 package com.assignment.githubapp.features.home.domain.model
 
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesWrapperResponse
+import com.assignment.githubapp.common.data.models.response.GitHubRepositoryResponse
 
 data class RepositoriesViewState(
     val statusBarHeight: Float = 0f,
-    val githubRepositoriesData: GitHubRepositoriesWrapperResponse? = null,
+    val isLoadingMore: Boolean = false,
+    val gitHubRepositoriesData: GitHubRepositoriesWrapperResponse? = null,
+    val repositoryList: List<GitHubRepositoryResponse>? = null,
     val repositoryNameQuery: String = "",
     val repositoryNameQueryError: String = "",
 

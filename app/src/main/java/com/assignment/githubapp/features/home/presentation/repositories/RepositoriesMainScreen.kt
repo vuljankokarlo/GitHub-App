@@ -5,13 +5,14 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.assignment.githubapp.common.util.isScrolledToTheEnd
 import com.assignment.githubapp.common.view.components.InputField
 import com.assignment.githubapp.common.view.components.TitleText
 import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
@@ -28,11 +29,26 @@ fun RepositoriesMainScreen(
 //        viewModel.onQueryFieldValueChange()
 //    }
 
+    val lazyListState = rememberLazyListState()
+
     LaunchedEffect(key1 = Unit) {
         viewModel.initValues()
     }
 
+    val isLastItemFullyVisible by remember {
+        derivedStateOf {
+            lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == lazyListState.layoutInfo.totalItemsCount - 1
+        }
+    }
+
+    LaunchedEffect(key1 = isLastItemFullyVisible) {
+        if(lazyListState.isScrolledToTheEnd() && viewModel.viewState.value.gitHubRepositoriesData != null) {
+           viewModel.onScrollEnd()
+        }
+    }
+
     LazyColumn(
+        state = lazyListState,
         modifier = Modifier
             .padding(horizontal = 20.dp)
             .padding(bottom = 60.dp)
@@ -65,15 +81,15 @@ fun RepositoriesMainScreen(
 
         //TODO add filters
 
-        viewModel.viewState.value.githubRepositoriesData?.items?.let { repositoryList ->
+        viewModel.viewState.value.repositoryList?.let { repositoryList ->
             items(repositoryList) { repository ->
                 RepositoryItem(
                     repository = repository,
                     onAvatarClick = {
-                        //TODO
+                        //TODO open custom chrome tab
                     },
                     onDetailsClick = {
-                        //TODO
+                        //TODO go to details page
                     }
                 )
             }
