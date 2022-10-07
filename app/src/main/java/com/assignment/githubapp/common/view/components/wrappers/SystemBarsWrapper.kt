@@ -13,7 +13,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 @OptIn(ExperimentalPagerApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
-fun StatusBarWrapper(
+fun SystemBarsWrapper(
     statusBarHeight: Float,
     content: @Composable () -> Unit
 ) {

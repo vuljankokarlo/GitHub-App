@@ -11,6 +11,7 @@ class PreferencesManager @Inject constructor(
     companion object {
         private const val SHARED_PREFERENCES = "shared_prefs_name"
         private const val STATUS_BAR_HEIGHT = "shared_prefs_name.status_bar_height"
+        private const val DARK_THEME = "shared_prefs_name.dark_theme"
     }
 
     private val sharePref = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
@@ -20,4 +21,10 @@ class PreferencesManager @Inject constructor(
     }
 
     fun getStatusBarHeight() = sharePref.getFloat(STATUS_BAR_HEIGHT, 0f)
+
+    fun setDarkTheme(isDarkTheme: Boolean) {
+        sharePref.edit().putBoolean(DARK_THEME, isDarkTheme).apply()
+    }
+
+    fun getDarkTheme() = sharePref.getBoolean(DARK_THEME, false)
 }

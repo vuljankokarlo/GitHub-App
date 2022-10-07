@@ -15,31 +15,34 @@ import androidx.navigation.NavController
 import com.assignment.githubapp.common.view.components.InputField
 import com.assignment.githubapp.common.view.components.TitleText
 import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
-import kotlinx.coroutines.delay
 
 @Composable
 fun RepositoriesMainScreen(
     navController: NavController,
     viewModel: RepositoriesViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(key1 = viewModel.viewState.value.repositoryNameQuery) {
-        if (viewModel.viewState.value.repositoryNameQuery.isEmpty())
-            return@LaunchedEffect
+//    Debounce compose hack, do not try at home because:
+//    "This function should not be used to (re-)launch ongoing tasks in response to callback events by way of storing callback data in MutableState passed to key1."
+//    LaunchedEffect(key1 = viewModel.viewState.value.repositoryNameQuery) {
+//        delay(500)
+//        viewModel.onQueryFieldValueChange()
+//    }
 
-        delay(500)
-        viewModel.onQueryFieldValueChange()
+    LaunchedEffect(key1 = Unit) {
+        viewModel.initValues()
     }
 
     LazyColumn(
         modifier = Modifier
             .padding(horizontal = 20.dp)
+            .padding(bottom = 60.dp)
             .fillMaxSize()
             .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             TitleText(
-                text = "GitHub Repositories",
+                text = "GitHub Repositories".uppercase(),
                 modifier = Modifier
                     .padding(
                         top = viewModel.viewState.value.statusBarHeight.dp + 10.dp,
@@ -50,17 +53,17 @@ fun RepositoriesMainScreen(
 
         item {
             InputField(
-                placeholder = "GitHub repository name",
+                placeholder = "GitHub repository name".uppercase(),
                 text = viewModel.viewState.value.repositoryNameQuery,
                 modifier = Modifier
                     .padding(bottom = 20.dp),
                 errorMessage = viewModel.viewState.value.repositoryNameQueryError
             ) { newValue ->
-                viewModel.viewState.value = viewModel.viewState.value.copy(
-                    repositoryNameQuery = newValue
-                )
+                viewModel.onQueryFieldValueChange(newValue)
             }
         }
+
+        //TODO add filters
 
         viewModel.viewState.value.githubRepositoriesData?.items?.let { repositoryList ->
             items(repositoryList) { repository ->

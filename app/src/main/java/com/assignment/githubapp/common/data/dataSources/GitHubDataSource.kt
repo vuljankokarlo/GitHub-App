@@ -4,6 +4,7 @@ import com.assignment.githubapp.common.data.dataSources.local.GitHubLocalSource
 import com.assignment.githubapp.common.data.dataSources.remote.GitHubAPI
 import com.assignment.githubapp.common.data.models.request.GitHubRepositoriesRequest
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesWrapperResponse
+import com.assignment.githubapp.common.global.domain.errorHandling.ErrorParser
 import com.assignment.githubapp.common.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -20,10 +21,16 @@ class GitHubDataSource @Inject constructor(
         var repositories: GitHubRepositoriesWrapperResponse? = null
         try {
             withContext(Dispatchers.IO) {
-                repositories = gitHubAPI.repositories(repositoriesRequest.query)
+                repositories = gitHubAPI.repositories(
+                    repositoriesRequest.query,
+                    repositoriesRequest.sort,
+                    repositoriesRequest.order,
+                    repositoriesRequest.per_page,
+                    repositoriesRequest.page
+                )
             }
         } catch (e: Exception) {
-            emit(Resource.Error(e.message ?: "Unknown error"))
+            emit(Resource.Error(ErrorParser.parseError(e)))
         }
         emit(Resource.Success(repositories))
     }

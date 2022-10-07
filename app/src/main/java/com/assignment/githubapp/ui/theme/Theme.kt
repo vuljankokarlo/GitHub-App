@@ -10,18 +10,18 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = Color.Black,
-    background = Color.White,
-    surface = Color(0xFFFFFFFF),
+    primary = Color.White,
+    background = Color.Black,
+    surface = Color.Black,
     error = Color(0xFFEe13f0d),
     secondary = Color(0xFF87cecc),
-    secondaryVariant = Black
+    secondaryVariant = White
 )
 
 private val PrimaryColorPalette = lightColors(
     primary = Color.Black,
     background = Color.White,
-    surface = Color(0xFFFFFFFF),
+    surface = Color.White,
     error = Color(0xFFEe13f0d),
     secondary = Color(0xFF87cecc),
     secondaryVariant = Black
@@ -29,9 +29,9 @@ private val PrimaryColorPalette = lightColors(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GitHubAppTheme(darkTheme: Boolean = true, content: @Composable() () -> Unit) {
+fun GitHubAppTheme(isDarkTheme: Boolean, content: @Composable () -> Unit) {
     MaterialTheme(
-        colors = PrimaryColorPalette,
+        colors = if(isDarkTheme) DarkColorPalette else PrimaryColorPalette,
         typography = Typography,
         shapes = Shapes,
     ) {

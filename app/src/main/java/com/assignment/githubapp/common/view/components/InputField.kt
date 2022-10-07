@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
@@ -23,7 +23,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
-import com.assignment.githubapp.ui.theme.Turqoise
+import com.assignment.githubapp.ui.theme.LightGray
+import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14
+import com.assignment.githubapp.ui.theme.OpenSansRegular_12_16
+import com.assignment.githubapp.ui.theme.Turquoise
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
@@ -40,7 +43,7 @@ fun InputField(
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusLocalManager = LocalFocusManager.current
-    val dividerColor = remember { mutableStateOf(Color.Black) }
+    val dividerColor = remember { mutableStateOf(Turquoise) }
 
 
     WindowInsets.ime
@@ -55,7 +58,7 @@ fun InputField(
         if ((errorMessage.isNotEmpty()))
             dividerColor.value = Color.Red
         else
-            dividerColor.value = Color.Black
+            dividerColor.value = Turquoise
     }
 
     Column(
@@ -66,7 +69,7 @@ fun InputField(
         if (text.isNotEmpty()) {
             Text(
                 text = placeholder.uppercase(),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.OpenSansRegular_12_16,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
         }
@@ -74,6 +77,8 @@ fun InputField(
             modifier = Modifier.fillMaxWidth()
         ) {
             BasicTextField(
+                cursorBrush = SolidColor(MaterialTheme.colors.primary),
+                textStyle = MaterialTheme.typography.OpenSansRegular_12_16,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f, false)
@@ -87,9 +92,9 @@ fun InputField(
                     }
                     .onFocusChanged {
                         if (it.isFocused)
-                            dividerColor.value = Turqoise
+                            dividerColor.value = Turquoise
                         else {
-                            dividerColor.value = Color.Black
+                            dividerColor.value = LightGray
                         }
                     },
                 value = text,
@@ -105,7 +110,8 @@ fun InputField(
                         if (text.isEmpty()) {
                             Text(
                                 text = placeholder,
-                                style = MaterialTheme.typography.body2
+                                style = MaterialTheme.typography.OpenSansRegular_12_16,
+                                color = MaterialTheme.colors.primary
                             )
                         }
                     }

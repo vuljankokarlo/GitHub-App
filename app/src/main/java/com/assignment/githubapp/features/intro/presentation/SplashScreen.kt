@@ -40,7 +40,10 @@ fun SplashScreen(
                 lottieJson = R.raw.splash_screen_anim,
                 modifier = Modifier.align(Alignment.Center)
             ) {
-                navController.navigate(Navigator.Home.RepositoriesMain())
+                navController.navigate(Navigator.Home()) {
+                    launchSingleTop = true
+                    popUpTo(0)
+                }
             }
         }
     }

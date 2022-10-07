@@ -22,17 +22,6 @@ val Typography = Typography(
         fontFamily = FontFamily(Font(R.font.opensans_regular)),
         fontSize = 21.sp
     ),
-    // for label
-    subtitle1 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.opensans_regular)),
-        fontSize = 11.sp,
-        letterSpacing = 2.sp
-    ),
-    // for input field text
-    subtitle2 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.opensans_bold)),
-        fontSize = 16.sp,
-    )
 )
 
 val Typography.OpenSansBold_16_24: TextStyle
@@ -43,6 +32,18 @@ val Typography.OpenSansBold_16_24: TextStyle
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
             lineHeight = 24.sp,
+            color = MaterialTheme.colors.primary
+        )
+    }
+
+val Typography.OpenSansBold_14_20: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = FontFamily(Font(R.font.opensans_bold)),
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
             color = MaterialTheme.colors.primary
         )
     }

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
@@ -19,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.assignment.githubapp.common.global.GlobalRepository
 import com.assignment.githubapp.common.util.dpFromPx
 import com.assignment.githubapp.common.view.components.wrappers.AppKeyboardFocusManager
-import com.assignment.githubapp.common.view.components.wrappers.StatusBarWrapper
+import com.assignment.githubapp.common.view.components.wrappers.SystemBarsWrapper
 import com.assignment.githubapp.common.view.navigation.Graphs.homeGraph
 import com.assignment.githubapp.common.view.navigation.Graphs.introGraph
 import com.assignment.githubapp.common.view.navigation.Navigator
@@ -63,7 +65,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppKeyboardFocusManager()
             navController = rememberNavController()
-            GitHubAppTheme {
+            val isDarkTheme by globalRepository.isDarkTheme.collectAsState()
+            GitHubAppTheme(isDarkTheme) {
                 val systemUiController = rememberSystemUiController()
                 SideEffect {
                     systemUiController.setStatusBarColor(color = Color.Transparent)
@@ -72,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                    StatusBarWrapper(globalRepository.statusBarHeight) {
+                    SystemBarsWrapper(globalRepository.statusBarHeight) {
                         NavHost(
                             navController = navController,
                             startDestination = getFirstRoute(),
