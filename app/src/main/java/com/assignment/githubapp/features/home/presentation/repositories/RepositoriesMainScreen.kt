@@ -27,6 +27,7 @@ import com.assignment.githubapp.R
 import com.assignment.githubapp.common.util.isScrolledToTheEnd
 import com.assignment.githubapp.common.view.components.InputField
 import com.assignment.githubapp.common.view.components.TitleText
+import com.assignment.githubapp.common.view.navigation.Navigator
 import com.assignment.githubapp.features.home.domain.model.SortType
 import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
 import com.assignment.githubapp.ui.theme.OpenSansRegular_12_16
@@ -76,7 +77,9 @@ fun RepositoriesMainScreen(
     }
 
     Box(
-        modifier = Modifier.padding(bottom = 60.dp).fillMaxSize()
+        modifier = Modifier
+            .padding(bottom = 60.dp)
+            .fillMaxSize()
     ) {
         LazyColumn(
             state = lazyListState,
@@ -162,7 +165,11 @@ fun RepositoriesMainScreen(
                             )
                         },
                         onDetailsClick = {
-                            //TODO go to details page
+                            navController.navigate(
+                                route = "${Navigator.Home.RepositoryDetails()}${repository.id}"
+                            ) {
+                                launchSingleTop = true
+                            }
                         }
                     )
                 }
@@ -190,12 +197,10 @@ fun RepositoriesMainScreen(
                     backgroundColor = MaterialTheme.colors.primary,
                     contentColor = MaterialTheme.colors.background
                 ),
-//                modifier = Modifier.size(48.dp)
             ) {
                 Icon(
                     painterResource(R.drawable.ic_up),
                     contentDescription = "icon up",
-//                    modifier = Modifier.size(24.dp),
                     tint = MaterialTheme.colors.background
                 )
             }

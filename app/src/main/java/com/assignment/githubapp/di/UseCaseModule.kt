@@ -2,6 +2,7 @@ package com.assignment.githubapp.di
 
 import com.assignment.githubapp.common.data.repositories.GitHubRepository
 import com.assignment.githubapp.features.home.domain.useCases.GetRepositoriesUseCase
+import com.assignment.githubapp.features.home.domain.useCases.GetRepositoryDetailsUseCase
 import com.assignment.githubapp.features.home.domain.useCases.GitHubRepositoriesUseCases
 import dagger.Module
 import dagger.Provides
@@ -15,10 +16,11 @@ object UseCaseModule {
     @Provides
     @ViewModelScoped
     fun provideGitHubRepositoriesUseCases(
-        githubRepository: GitHubRepository
+        gitHubRepository: GitHubRepository
     ): GitHubRepositoriesUseCases {
         return GitHubRepositoriesUseCases(
-            getRepositoriesUseCase = GetRepositoriesUseCase(githubRepository),
+            getRepositoriesUseCase = GetRepositoriesUseCase(gitHubRepository),
+            getRepositoryDetailsUseCase = GetRepositoryDetailsUseCase(gitHubRepository)
         )
     }
 }

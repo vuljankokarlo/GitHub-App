@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.assignment.githubapp.common.view.navigation.Navigator.Home
 import com.assignment.githubapp.common.view.navigation.Navigator.Home.HomeScreenNavRoute
@@ -55,7 +56,12 @@ object Graphs {
         ) {
             composable(route = HomeScreenNavRoute()) { HomeScreenNav(navController) }
             composable(route = RepositoriesMain()) { RepositoriesMainScreen(navController) }
-            composable(route = RepositoryDetails()) { RepositoryDetailsScreen(navController) }
+            composable(
+                route = "${RepositoryDetails()}{repositoryId}",
+                arguments = listOf(navArgument("repositoryId") { defaultValue = -1 })
+            ) { backStackEntry ->
+                RepositoryDetailsScreen(navController, backStackEntry.arguments?.getInt("repositoryId")!!)
+            }
             composable(route = Profile()) { ProfileScreen(navController) }
         }
     }

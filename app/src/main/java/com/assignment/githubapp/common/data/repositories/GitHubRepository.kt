@@ -8,4 +8,6 @@ class GitHubRepository(
 ) {
     suspend fun repositories(gitHubRepositoriesRequest: GitHubRepositoriesRequest) =
         gitHubDataSource.repositories(gitHubRepositoriesRequest)
+
+    suspend fun repositoryDetails(repositoryId: Int) = gitHubDataSource.repositoryDetails(repositoryId)
 }

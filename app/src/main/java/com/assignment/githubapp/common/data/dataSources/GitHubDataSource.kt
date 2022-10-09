@@ -4,6 +4,7 @@ import com.assignment.githubapp.common.data.dataSources.local.GitHubLocalSource
 import com.assignment.githubapp.common.data.dataSources.remote.GitHubAPI
 import com.assignment.githubapp.common.data.models.request.GitHubRepositoriesRequest
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesWrapperResponse
+import com.assignment.githubapp.common.data.models.response.GitHubRepositoryResponse
 import com.assignment.githubapp.common.global.domain.errorHandling.ErrorParser
 import com.assignment.githubapp.common.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,20 @@ class GitHubDataSource @Inject constructor(
             emit(Resource.Error(ErrorParser.parseError(e)))
         }
         emit(Resource.Success(repositories))
+    }
+
+    suspend fun repositoryDetails(
+        repositoryId: Int
+    ) = flow {
+        var repository: GitHubRepositoryResponse? = null
+        try {
+            withContext(Dispatchers.IO) {
+                repository = gitHubAPI.repositoryDetails(repositoryId)
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(ErrorParser.parseError(e)))
+        }
+        emit(Resource.Success(repository))
     }
 
     //TODO save/load user
