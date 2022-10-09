@@ -11,6 +11,7 @@ import com.assignment.githubapp.common.util.Resource
 import com.assignment.githubapp.common.view.presentation.BaseViewModel
 import com.assignment.githubapp.features.home.domain.model.OrderType
 import com.assignment.githubapp.features.home.domain.model.RepositoriesViewState
+import com.assignment.githubapp.features.home.domain.model.SortType
 import com.assignment.githubapp.features.home.domain.useCases.GitHubRepositoriesUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -62,11 +63,28 @@ class RepositoriesViewModel @Inject constructor(
         handleDebounce()
     }
 
+    fun onSortTypeChange(newValue: SortType) {
+        viewState.value = viewState.value.copy(
+            sort = if (viewState.value.sort == newValue) null else newValue,
+            per_page = 10,
+            page = 1
+        )
+        handleDebounce()
+    }
+
+    fun onOrderTypeChange() {
+        viewState.value = viewState.value.copy(
+            order = if (viewState.value.order == OrderType.DESC) OrderType.ASC else OrderType.DESC,
+            per_page = 10,
+            page = 1
+        )
+        handleDebounce()
+    }
+
     fun onScrollEnd() {
         if (!viewState.value.isLoadingMore && (viewState.value.gitHubRepositoriesData?.items?.size ?: 0 < viewState.value.gitHubRepositoriesData?.totalCount ?: 0)) {
             viewState.value = viewState.value.copy(
-                page = viewState.value.page + 1,
-                isLoadingMore = true
+                page = viewState.value.page + 1
             )
             getGitHubRepositories()
         }
@@ -84,15 +102,17 @@ class RepositoriesViewModel @Inject constructor(
     }
 
     private fun getGitHubRepositories() {
-        Log.i(GitHubApp.TAG, "executed!")
         viewModelScope.launch {
+            viewState.value = viewState.value.copy(
+                isLoadingMore = true
+            )
             gitHubRepositoriesUseCases.getRepositoriesUseCase(
                 GitHubRepositoriesRequest(
                     query = viewState.value.repositoryNameQuery.ifEmpty {
                         ('A'..'Z').random().toString()
                     },
-                    sort = viewState.value.sort?.name,
-                    order = viewState.value.order.name,
+                    sort = viewState.value.sort.toString(),
+                    order = viewState.value.order.toString(),
                     per_page = viewState.value.per_page,
                     page = viewState.value.page
                 )

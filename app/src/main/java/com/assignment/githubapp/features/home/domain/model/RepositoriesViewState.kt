@@ -1,5 +1,6 @@
 package com.assignment.githubapp.features.home.domain.model
 
+import com.assignment.githubapp.R
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesWrapperResponse
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoryResponse
 
@@ -27,10 +28,10 @@ enum class OrderType {
     }
 }
 
-enum class SortType {
-    STARS,
-    FORKS,
-    UPDATED;
+enum class SortType(val icon: Int) {
+    STARS(R.drawable.ic_stargazers),
+    FORKS(R.drawable.ic_forks),
+    UPDATED(R.drawable.calendar_24);
 
     override fun toString(): String {
         return name.lowercase()

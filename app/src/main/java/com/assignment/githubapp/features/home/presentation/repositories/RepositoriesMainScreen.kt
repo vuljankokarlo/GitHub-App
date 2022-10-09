@@ -1,21 +1,28 @@
 package com.assignment.githubapp.features.home.presentation.repositories
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.assignment.githubapp.common.util.isScrolledToTheEnd
 import com.assignment.githubapp.common.view.components.InputField
 import com.assignment.githubapp.common.view.components.TitleText
+import com.assignment.githubapp.features.home.domain.model.SortType
 import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
+import com.assignment.githubapp.ui.theme.OpenSansRegular_12_16
+import com.assignment.githubapp.ui.theme.Turquoise
 
 @Composable
 fun RepositoriesMainScreen(
@@ -42,8 +49,8 @@ fun RepositoriesMainScreen(
     }
 
     LaunchedEffect(key1 = isLastItemFullyVisible) {
-        if(lazyListState.isScrolledToTheEnd() && viewModel.viewState.value.gitHubRepositoriesData != null) {
-           viewModel.onScrollEnd()
+        if (lazyListState.isScrolledToTheEnd() && viewModel.viewState.value.gitHubRepositoriesData != null) {
+            viewModel.onScrollEnd()
         }
     }
 
@@ -79,7 +86,47 @@ fun RepositoriesMainScreen(
             }
         }
 
-        //TODO add filters
+        item {
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 20.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "Sort by:",
+                    style = MaterialTheme.typography.OpenSansRegular_12_16,
+                    color = MaterialTheme.colors.primary
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                SortType.values().forEach {
+                    Icon(
+                        painterResource(
+                            it.icon
+                        ),
+                        tint = if (viewModel.viewState.value.sort == it) Turquoise else MaterialTheme.colors.primary,
+                        contentDescription = "sort type icon",
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .border(1.dp, MaterialTheme.colors.primary)
+                            .padding(10.dp)
+                            .size(24.dp)
+                            .clickable {
+                                viewModel.onSortTypeChange(it)
+                            }
+                    )
+                }
+                Text(
+                    text = viewModel.viewState.value.order.name,
+                    style = MaterialTheme.typography.OpenSansRegular_12_16,
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.onOrderTypeChange()
+                        }
+                )
+            }
+        }
 
         viewModel.viewState.value.repositoryList?.let { repositoryList ->
             items(repositoryList) { repository ->
