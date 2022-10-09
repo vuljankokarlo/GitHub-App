@@ -12,10 +12,12 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -71,7 +73,8 @@ fun RepositoryItem(
                         if (isSecondaryInfoShown.value)
                             R.drawable.ic_up
                         else
-                            R.drawable.ic_down),
+                            R.drawable.ic_down
+                    ),
                     contentDescription = "icon up/down",
                     modifier = Modifier
                         .padding(end = 10.dp, top = 10.dp)
@@ -168,7 +171,9 @@ fun RepositoryPrimaryInfo(
                             Text(
                                 "Owner: ",
                                 style = MaterialTheme.typography.OpenSansBold_14_20,
-                                color = MaterialTheme.colors.primary
+                                color = MaterialTheme.colors.primary,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                             )
                             Text(
                                 repository.owner.name,
@@ -176,6 +181,7 @@ fun RepositoryPrimaryInfo(
                                 color = MaterialTheme.colors.primary
                             )
                         }
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
@@ -188,6 +194,23 @@ fun RepositoryPrimaryInfo(
                             )
                             Text(
                                 repository.updated_at.parseToPresentationFormat(),
+                                style = MaterialTheme.typography.OpenSansRegular_14_20,
+                                color = MaterialTheme.colors.primary
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Text(
+                                "No. of issues: ",
+                                style = MaterialTheme.typography.OpenSansBold_14_20,
+                                color = MaterialTheme.colors.primary
+                            )
+                            Text(
+                                repository.openIssues.toString(),
                                 style = MaterialTheme.typography.OpenSansRegular_14_20,
                                 color = MaterialTheme.colors.primary
                             )

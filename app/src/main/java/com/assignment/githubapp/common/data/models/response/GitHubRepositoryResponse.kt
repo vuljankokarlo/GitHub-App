@@ -18,5 +18,7 @@ data class GitHubRepositoryResponse(
     @SerialName("forks")
     val forks: Int,
     @SerialName("updated_at")
-    val updated_at: String
+    val updated_at: String,
+    @SerialName("open_issues_count")
+    val openIssues: Int
 )

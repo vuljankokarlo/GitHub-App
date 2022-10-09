@@ -8,6 +8,7 @@ data class OwnerResponse(
     @SerialName("login")
     val name: String,
     @SerialName("avatar_url")
-    val avatar_url: String
-
+    val avatar_url: String,
+    @SerialName("html_url")
+    val profileUrl: String
 )
