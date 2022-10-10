@@ -51,6 +51,20 @@ android {
         }
     }
 
+    flavorDimensions "type"
+    productFlavors {
+        free {
+            dimension "type"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+        }
+        paid {
+            dimension "type"
+            applicationIdSuffix ".paid"
+            versionNameSuffix "-paid"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
