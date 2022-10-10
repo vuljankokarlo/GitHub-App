@@ -1,6 +1,7 @@
 package com.assignment.githubapp.di
 
 import com.assignment.githubapp.common.data.repositories.GitHubRepository
+import com.assignment.githubapp.features.home.domain.useCases.GetOwnerInfoUseCase
 import com.assignment.githubapp.features.home.domain.useCases.GetRepositoriesUseCase
 import com.assignment.githubapp.features.home.domain.useCases.GetRepositoryDetailsUseCase
 import com.assignment.githubapp.features.home.domain.useCases.GitHubRepositoriesUseCases
@@ -20,7 +21,8 @@ object UseCaseModule {
     ): GitHubRepositoriesUseCases {
         return GitHubRepositoriesUseCases(
             getRepositoriesUseCase = GetRepositoriesUseCase(gitHubRepository),
-            getRepositoryDetailsUseCase = GetRepositoryDetailsUseCase(gitHubRepository)
+            getRepositoryDetailsUseCase = GetRepositoryDetailsUseCase(gitHubRepository),
+            getOwnerInfoUseCase = GetOwnerInfoUseCase(gitHubRepository)
         )
     }
 }

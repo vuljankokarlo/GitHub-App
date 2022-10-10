@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.assignment.githubapp.GitHubApp
 import com.assignment.githubapp.common.data.models.request.GitHubRepositoriesRequest
 import com.assignment.githubapp.common.global.GlobalRepository
 import com.assignment.githubapp.common.util.Resource
@@ -15,6 +14,7 @@ import com.assignment.githubapp.features.home.domain.model.SortType
 import com.assignment.githubapp.features.home.domain.useCases.GitHubRepositoriesUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -28,6 +28,10 @@ class RepositoriesViewModel @Inject constructor(
 
     override var viewState: MutableState<RepositoriesViewState> =
         mutableStateOf(RepositoriesViewState())
+
+    sealed class OneShotEvent {
+        data class NavigateToResults(val id: Int) : OneShotEvent()
+    }
 
     private var debounceJob: Job? = null
 
@@ -52,6 +56,9 @@ class RepositoriesViewModel @Inject constructor(
         )
     }
 
+    private val _oneShotEvents = Channel<OneShotEvent>(Channel.BUFFERED)
+    val oneShotEvents = _oneShotEvents.receiveAsFlow()
+
     fun onQueryFieldValueChange(newValue: String) {
         viewState.value = viewState.value.copy(
             repositoryNameQuery = newValue,
@@ -61,6 +68,12 @@ class RepositoriesViewModel @Inject constructor(
             page = 1
         )
         handleDebounce()
+    }
+
+    fun navigateToDetails(id: Int) {
+        viewModelScope.launch {
+            _oneShotEvents.send(OneShotEvent.NavigateToResults(id))
+        }
     }
 
     fun onSortTypeChange(newValue: SortType) {
@@ -103,8 +116,10 @@ class RepositoriesViewModel @Inject constructor(
 
     private fun getGitHubRepositories() {
         viewModelScope.launch {
+            Log.i("www", "executed!")
             viewState.value = viewState.value.copy(
-                isLoadingMore = true
+                isLoadingMore = true,
+                repositoryNameQueryError = "",
             )
             gitHubRepositoriesUseCases.getRepositoriesUseCase(
                 GitHubRepositoriesRequest(
@@ -132,7 +147,6 @@ class RepositoriesViewModel @Inject constructor(
                             )).distinctBy {
                                 it.id
                             },
-                            repositoryNameQueryError = "",
                             isLoadingMore = false
                         )
                     }

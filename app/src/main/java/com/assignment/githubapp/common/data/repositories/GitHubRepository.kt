@@ -10,4 +10,6 @@ class GitHubRepository(
         gitHubDataSource.repositories(gitHubRepositoriesRequest)
 
     suspend fun repositoryDetails(repositoryId: Int) = gitHubDataSource.repositoryDetails(repositoryId)
+
+    suspend fun ownerInfo(username: String) = gitHubDataSource.ownerInfo(username)
 }

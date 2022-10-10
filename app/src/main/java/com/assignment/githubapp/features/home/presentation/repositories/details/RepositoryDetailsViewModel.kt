@@ -9,6 +9,8 @@ import com.assignment.githubapp.common.view.presentation.BaseViewModel
 import com.assignment.githubapp.features.home.domain.model.RepositoryDetailsViewState
 import com.assignment.githubapp.features.home.domain.useCases.GitHubRepositoriesUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,23 +24,58 @@ class RepositoryDetailsViewModel @Inject constructor(
         mutableStateOf(RepositoryDetailsViewState())
 
     fun initViewModel(repositoryId: Int) {
-        getRepositoryDetails(repositoryId)
+        viewModelScope.launch {
+            listOf(
+                async { getRepositoryDetails(repositoryId) }
+            ).awaitAll()
+            getOwner()
+        }
     }
 
-    private fun getRepositoryDetails(repositoryId: Int) {
-        viewModelScope.launch {
-            gitHubRepositoriesUseCases.getRepositoryDetailsUseCase(
-                repositoryId
+    init {
+        viewState.value = viewState.value.copy(
+            statusBarHeight = globalRepository.statusBarHeight
+        )
+    }
+
+    private suspend fun getOwner() {
+        viewState.value.repository?.let {
+            viewState.value = viewState.value.copy(
+                errorMessage = ""
+            )
+            gitHubRepositoriesUseCases.getOwnerInfoUseCase(
+                it.owner.login
             ).collect { collected ->
                 when (collected) {
                     is Resource.Error -> {
-                        TODO()
+                        viewState.value = viewState.value.copy(
+                            errorMessage = collected.message ?: ""
+                        )
                     }
                     is Resource.Success -> {
                         viewState.value = viewState.value.copy(
-                            repository = collected.data
+                            owner = collected.data
                         )
                     }
+                }
+            }
+        }
+    }
+
+    private suspend fun getRepositoryDetails(repositoryId: Int) {
+        gitHubRepositoriesUseCases.getRepositoryDetailsUseCase(
+            repositoryId
+        ).collect { collected ->
+            when (collected) {
+                is Resource.Error -> {
+                    viewState.value = viewState.value.copy(
+                        errorMessage = collected.message ?: ""
+                    )
+                }
+                is Resource.Success -> {
+                    viewState.value = viewState.value.copy(
+                        repository = collected.data
+                    )
                 }
             }
         }

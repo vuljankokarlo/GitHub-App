@@ -32,12 +32,14 @@ import com.assignment.githubapp.features.home.domain.model.SheetContent.Empty
 import com.assignment.githubapp.features.home.domain.model.SheetContent.FabModal
 import com.assignment.githubapp.features.home.presentation.profile.ProfileScreen
 import com.assignment.githubapp.features.home.presentation.repositories.RepositoriesMainScreen
-import com.assignment.githubapp.ui.theme.DarkGray
+import com.assignment.githubapp.features.home.presentation.repositories.RepositoriesViewModel
 import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14
 import com.assignment.githubapp.ui.theme.OpenSansRegular_14_20
 import com.assignment.githubapp.ui.theme.Turquoise
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -71,6 +73,25 @@ fun HomeScreenNav(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.initValues()
+    }
+
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.oneShotEvents
+            .onEach {
+                when (it) {
+                    is HomeScreenNavViewModel.OneShotEvent.BottomNavigation -> {
+                        navController.navigate(it.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                }
+            }
+            .collect()
     }
 
     ModalBottomSheetLayout(
@@ -116,7 +137,9 @@ fun HomeScreenNav(
                     backgroundColor = MaterialTheme.colors.background,
                     elevation = 0.dp
                 ) {
-                    BottomNav(navController = navController)
+                    BottomNav(navController = navController) {
+                        viewModel.navigate(it)
+                    }
                 }
             },
             floatingActionButtonPosition = FabPosition.Center,
@@ -129,7 +152,7 @@ fun HomeScreenNav(
                 ) {
                     FloatingActionButton(
                         shape = CircleShape,
-                        backgroundColor = MaterialTheme.colors.primary,
+                        backgroundColor = MaterialTheme.colors.background,
                         modifier = Modifier
                             .border(
                                 BorderStroke(1.dp, MaterialTheme.colors.background),
@@ -143,9 +166,10 @@ fun HomeScreenNav(
                         contentColor = MaterialTheme.colors.primary
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_close_40px),
+                            painter = painterResource(id = R.drawable.ic_settings),
                             contentDescription = "",
-                            tint = Color.Unspecified
+                            tint = MaterialTheme.colors.primary,
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 }
@@ -164,7 +188,7 @@ fun HomeScreenNav(
 }
 
 @Composable
-fun BottomNav(navController: NavController) {
+fun BottomNav(navController: NavController, navigate: (String) -> Unit) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     val items = mutableListOf(
@@ -202,15 +226,7 @@ fun BottomNav(navController: NavController) {
                 unselectedContentColor = MaterialTheme.colors.primary.copy(alpha = 0.4f),
                 enabled = item.route != "",
                 onClick = {
-                    item.route.let { it1 ->
-                        navController.navigate(it1) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
+                    navigate(item.route)
                 }
             )
         }

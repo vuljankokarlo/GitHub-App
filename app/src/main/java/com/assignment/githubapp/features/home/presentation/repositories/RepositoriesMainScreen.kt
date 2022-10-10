@@ -3,10 +3,8 @@ package com.assignment.githubapp.features.home.presentation.repositories
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -32,6 +30,8 @@ import com.assignment.githubapp.features.home.domain.model.SortType
 import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
 import com.assignment.githubapp.ui.theme.OpenSansRegular_12_16
 import com.assignment.githubapp.ui.theme.Turquoise
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,6 +58,22 @@ fun RepositoriesMainScreen(
         viewModel.initValues()
     }
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.oneShotEvents
+            .onEach {
+                when (it) {
+                    is RepositoriesViewModel.OneShotEvent.NavigateToResults -> {
+                        navController.navigate(
+                            route = "${Navigator.Home.RepositoryDetails()}${it.id}"
+                        ) {
+                            launchSingleTop = true
+                        }
+                    }
+                }
+            }
+            .collect()
+    }
+
     val isLastItemFullyVisible by remember {
         derivedStateOf {
             lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == lazyListState.layoutInfo.totalItemsCount - 1
@@ -66,7 +82,7 @@ fun RepositoriesMainScreen(
 
     val isScrollToTopShowing by remember {
         derivedStateOf {
-            lazyListState.firstVisibleItemIndex > 3
+            lazyListState.layoutInfo.visibleItemsInfo.firstOrNull()?.index ?: 0 > 5
         }
     }
 
@@ -81,6 +97,11 @@ fun RepositoriesMainScreen(
             .padding(bottom = 60.dp)
             .fillMaxSize()
     ) {
+        if (viewModel.viewState.value.repositoryList.isNullOrEmpty())
+            CircularProgressIndicator(
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier.align(Alignment.Center)
+            )
         LazyColumn(
             state = lazyListState,
             modifier = Modifier
@@ -165,11 +186,7 @@ fun RepositoriesMainScreen(
                             )
                         },
                         onDetailsClick = {
-                            navController.navigate(
-                                route = "${Navigator.Home.RepositoryDetails()}${repository.id}"
-                            ) {
-                                launchSingleTop = true
-                            }
+                            viewModel.navigateToDetails(repository.id)
                         }
                     )
                 }

@@ -171,14 +171,14 @@ fun RepositoryPrimaryInfo(
                             Text(
                                 "Owner: ",
                                 style = MaterialTheme.typography.OpenSansBold_14_20,
+                                color = MaterialTheme.colors.primary
+                            )
+                            Text(
+                                repository.owner.login,
+                                style = MaterialTheme.typography.OpenSansRegular_14_20,
                                 color = MaterialTheme.colors.primary,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                            )
-                            Text(
-                                repository.owner.name,
-                                style = MaterialTheme.typography.OpenSansRegular_14_20,
-                                color = MaterialTheme.colors.primary
                             )
                         }
 
