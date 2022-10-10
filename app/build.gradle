@@ -37,8 +37,6 @@ android {
             manifestPlaceholders = [appName: "GitHub App"]
 
             buildConfigField "String", 'REMOTE_BASE_URL', '"https://api.github.com/"'
-
-            resValue "string", "name_of_app", "GitHub App"
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -46,8 +44,6 @@ android {
             manifestPlaceholders = [appName: "@string/app_name"]
 
             buildConfigField "String", 'REMOTE_BASE_URL', '"https://api.github.com/"'
-
-            resValue "string", "name_of_app", "GitHub App DEBUG"
         }
     }
 
@@ -57,15 +53,13 @@ android {
             dimension "type"
             applicationIdSuffix ".free"
             versionNameSuffix "-free"
-            buildConfigField 'String', 'flavor', 'free'
-            resValue 'string', 'app_name', 'GitHub App FREE'
+            resValue 'string', 'name_of_app', 'GitHub App FREE'
         }
         paid {
             dimension "type"
             applicationIdSuffix ".paid"
             versionNameSuffix "-paid"
-            buildConfigField 'String', 'flavor', 'paid'
-            resValue 'string', 'app_name', 'GitHub App PAID'
+            resValue 'string', 'name_of_app', 'GitHub App PAID'
         }
     }
 
