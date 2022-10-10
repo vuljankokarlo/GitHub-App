@@ -11,6 +11,11 @@ class Util {
     companion object {
         const val PRESENTATION_DATE_FORMAT = "dd.MM.yyyy"
         const val API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+
+        enum class FlavorType {
+            FREE,
+            PAID
+        }
     }
 }
 

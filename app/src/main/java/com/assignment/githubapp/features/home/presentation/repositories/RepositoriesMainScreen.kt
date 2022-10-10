@@ -59,7 +59,6 @@ fun RepositoriesMainScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.initValues()
-        Log.i(GitHubApp.TAG, com.assignment.githubapp.BuildConfig.FLAVOR)
     }
 
     LaunchedEffect(key1 = Unit) {

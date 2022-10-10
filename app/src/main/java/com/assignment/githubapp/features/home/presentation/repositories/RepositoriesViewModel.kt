@@ -116,7 +116,6 @@ class RepositoriesViewModel @Inject constructor(
 
     private fun getGitHubRepositories() {
         viewModelScope.launch {
-            Log.i("www", "executed!")
             viewState.value = viewState.value.copy(
                 isLoadingMore = true,
                 repositoryNameQueryError = "",
