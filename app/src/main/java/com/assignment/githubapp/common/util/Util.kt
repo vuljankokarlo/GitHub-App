@@ -14,7 +14,11 @@ class Util {
 
         enum class FlavorType {
             FREE,
-            PAID
+            PAID;
+
+            override fun toString(): String {
+                return name.lowercase()
+            }
         }
     }
 }
@@ -37,4 +41,5 @@ fun String.getDate(format: String = API_DATE_FORMAT): Date {
     return SimpleDateFormat(format).parse(this)
 }
 
-fun LazyListState.isScrolledToTheEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1
+fun LazyListState.isScrolledToTheEnd() =
+    layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1

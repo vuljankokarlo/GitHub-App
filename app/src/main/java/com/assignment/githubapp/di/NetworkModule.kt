@@ -2,12 +2,12 @@ package com.assignment.githubapp.di
 
 import com.assignment.githubapp.BuildConfig.REMOTE_BASE_URL
 import com.assignment.githubapp.common.data.dataSources.remote.GitHubAPI
+import com.assignment.githubapp.common.global.GlobalRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.realm.BuildConfig
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -22,7 +22,9 @@ object NetworkModule {
 
     @Provides
     @Named("BaseHttpClient")
-    fun getBaseHttpClient(): OkHttpClient {
+    fun getBaseHttpClient(
+        globalRepository: GlobalRepository
+    ): OkHttpClient {
         return OkHttpClient
             .Builder()
             .addInterceptor {
@@ -30,6 +32,13 @@ object NetworkModule {
                     it.request()
                         .newBuilder()
                         .addHeader("Accept", "application/vnd.github+json")
+                        .addHeader(
+                            "Authorization",
+                            if (globalRepository.accessToken.isNullOrEmpty())
+                                ""
+                            else
+                                "Bearer ${globalRepository.accessToken}"
+                        )
                         .build()
                 )
             }

@@ -23,9 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.assignment.githubapp.BuildConfig
 import com.assignment.githubapp.R
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoryResponse
 import com.assignment.githubapp.common.data.models.response.OwnerResponse
+import com.assignment.githubapp.common.util.Util
+import com.assignment.githubapp.common.util.Util.Companion.FlavorType.*
 import com.assignment.githubapp.common.util.parseToPresentationFormat
 import com.assignment.githubapp.ui.theme.OpenSansBold_14_20
 import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14
@@ -154,7 +157,9 @@ fun RepositoryPrimaryInfo(
                         modifier = Modifier
                             .padding(10.dp)
                             .size(100.dp)
-                            .clickable {
+                            .clickable(
+                                enabled = BuildConfig.FLAVOR == PAID.toString()
+                            ) {
                                 onAvatarClick(repository.owner)
                             }
                     )
@@ -245,14 +250,15 @@ fun RepositorySecondaryInfo(
             SecondaryInfoItem(repository.watchers, R.drawable.ic_watchers)
             Spacer(modifier = Modifier.weight(1f))
         }
-        Text(
-            "See full details".uppercase(),
-            style = MaterialTheme.typography.OpenSansRegular_10_14,
-            color = MaterialTheme.colors.primary,
-            modifier = Modifier.clickable {
-                onDetailsClick(repository)
-            }
-        )
+        if (BuildConfig.FLAVOR == PAID.toString())
+            Text(
+                "See full details".uppercase(),
+                style = MaterialTheme.typography.OpenSansRegular_10_14,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier.clickable {
+                    onDetailsClick(repository)
+                }
+            )
     }
 }
 

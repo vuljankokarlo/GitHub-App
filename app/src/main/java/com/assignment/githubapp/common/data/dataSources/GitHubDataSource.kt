@@ -1,11 +1,9 @@
 package com.assignment.githubapp.common.data.dataSources
 
-import com.assignment.githubapp.common.data.dataSources.local.GitHubLocalSource
 import com.assignment.githubapp.common.data.dataSources.remote.GitHubAPI
 import com.assignment.githubapp.common.data.models.request.GitHubRepositoriesRequest
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoriesWrapperResponse
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoryDetailsResponse
-import com.assignment.githubapp.common.data.models.response.GitHubRepositoryResponse
 import com.assignment.githubapp.common.data.models.response.OwnerResponse
 import com.assignment.githubapp.common.global.domain.errorHandling.ErrorParser
 import com.assignment.githubapp.common.util.Resource
@@ -15,8 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GitHubDataSource @Inject constructor(
-    private val gitHubAPI: GitHubAPI,
-    private val gitHubLocalSource: GitHubLocalSource
+    private val gitHubAPI: GitHubAPI
 ) {
     suspend fun repositories(
         repositoriesRequest: GitHubRepositoriesRequest,
@@ -66,6 +63,15 @@ class GitHubDataSource @Inject constructor(
         emit(Resource.Success(owner))
     }
 
-
-    //TODO save/load user
+    suspend fun authOwnerInfo() = flow {
+        var owner: OwnerResponse? = null
+        try {
+            withContext(Dispatchers.IO) {
+                owner = gitHubAPI.authOwnerInfo()
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(ErrorParser.parseError(e)))
+        }
+        emit(Resource.Success(owner))
+    }
 }

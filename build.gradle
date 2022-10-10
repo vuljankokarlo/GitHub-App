@@ -21,9 +21,6 @@ buildscript {
         retrofit_version = "2.9.0"
         ok_http_version = "4.9.1"
 
-        // Realm
-        realm_version = '10.9.0'
-
         // Navigation
         androidx_navigation_version = "2.5.0-alpha01"
 
@@ -38,13 +35,14 @@ buildscript {
 
         //Chrome custom tabs
         chrome_custom_tabs_version = "1.4.0"
+
+        //Firebase
+        firebase_bom_version = "29.0.4"
     }
 
     repositories {
         google()
         mavenCentral()
-//        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-//        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.3"
@@ -58,8 +56,8 @@ buildscript {
         // kotlinx.serialization
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
 
-        // Realm
-        classpath "io.realm:realm-gradle-plugin:$realm_version"
+        // Firebase
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 }
 

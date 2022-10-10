@@ -28,5 +28,8 @@ interface GitHubAPI {
     suspend fun ownerInfo(
         @Path("username") repositoryId: String
     ): OwnerResponse
+
+    @GET("user")
+    suspend fun authOwnerInfo(): OwnerResponse
 }
 

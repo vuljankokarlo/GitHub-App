@@ -12,6 +12,7 @@ class PreferencesManager @Inject constructor(
         private const val SHARED_PREFERENCES = "shared_prefs_name"
         private const val STATUS_BAR_HEIGHT = "shared_prefs_name.status_bar_height"
         private const val DARK_THEME = "shared_prefs_name.dark_theme"
+        private const val ACCESS_TOKEN = "shared_prefs_name.access_token"
     }
 
     private val sharePref = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
@@ -27,4 +28,10 @@ class PreferencesManager @Inject constructor(
     }
 
     fun getDarkTheme() = sharePref.getBoolean(DARK_THEME, false)
+
+    fun setAccessToken(token: String) {
+        sharePref.edit().putString(ACCESS_TOKEN, token).apply()
+    }
+
+    fun getAccessToken() = sharePref.getString(ACCESS_TOKEN, "")
 }

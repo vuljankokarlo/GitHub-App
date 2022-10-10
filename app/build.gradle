@@ -2,9 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'realm-android'
     id 'dagger.hilt.android.plugin'
     id "kotlinx-serialization"
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -19,8 +19,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", 'REALM_DB_NAME', '"GitHubApp.realm"'
-        buildConfigField "long", 'REALM_DB_VERSION', '1'
+        Properties properties = new Properties()
+        if (project.rootProject.file('local.properties').canRead()) {
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        }
+
+        buildConfigField 'String', 'GITHUB_SECRET', properties.getProperty('GITHUB_SECRET', '""')
+
         vectorDrawables {
             useSupportLibrary true
         }
@@ -166,4 +171,9 @@ dependencies {
 
     //Chrome custom tabs
     implementation "androidx.browser:browser:$chrome_custom_tabs_version"
+
+    //firebase auth
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    implementation("com.google.firebase:firebase-auth")
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 }

@@ -1,14 +1,12 @@
 package com.assignment.githubapp.common.global
 
 import com.assignment.githubapp.common.PreferencesManager
-import com.assignment.githubapp.common.global.domain.useCases.GlobalRepositoryUseCases
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class GlobalRepository @Inject constructor(
-    private val preferencesManager: PreferencesManager,
-    private val globalRepositoryUseCases: GlobalRepositoryUseCases
+    private val preferencesManager: PreferencesManager
 ) {
     var statusBarHeight: Float
         get() = preferencesManager.getStatusBarHeight()
@@ -23,5 +21,11 @@ class GlobalRepository @Inject constructor(
         preferencesManager.setDarkTheme(isDarkTheme)
         _isDarkTheme.value = isDarkTheme
     }
+
+    var accessToken: String?
+        get() = preferencesManager.getAccessToken()
+        set(new) {
+            preferencesManager.setAccessToken(new ?: "")
+        }
 
 }

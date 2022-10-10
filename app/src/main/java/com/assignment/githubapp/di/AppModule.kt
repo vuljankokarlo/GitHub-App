@@ -1,10 +1,7 @@
 package com.assignment.githubapp.di
 
 import com.assignment.githubapp.common.PreferencesManager
-import com.assignment.githubapp.common.data.repositories.GitHubRepository
 import com.assignment.githubapp.common.global.GlobalRepository
-import com.assignment.githubapp.common.global.domain.useCases.GlobalRepositoryUseCases
-import com.assignment.githubapp.common.global.domain.useCases.TempUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,19 +16,7 @@ object AppModule {
     @Singleton
     fun provideRepository(
         preferencesManager: PreferencesManager,
-        globalRepositoryUseCases: GlobalRepositoryUseCases
     ): GlobalRepository {
-        return GlobalRepository(preferencesManager, globalRepositoryUseCases)
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideGlobalRepositoryUseCases(
-        githubRepository: GitHubRepository
-    ): GlobalRepositoryUseCases {
-        return GlobalRepositoryUseCases(
-            tempUseCase = TempUseCase(githubRepository),
-        )
+        return GlobalRepository(preferencesManager)
     }
 }
