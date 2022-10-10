@@ -1,6 +1,7 @@
 package com.assignment.githubapp.features.home.presentation.repositories
 
 import android.net.Uri
+import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.assignment.githubapp.GitHubApp
 import com.assignment.githubapp.R
 import com.assignment.githubapp.common.util.isScrolledToTheEnd
 import com.assignment.githubapp.common.view.components.InputField
@@ -30,6 +32,7 @@ import com.assignment.githubapp.features.home.domain.model.SortType
 import com.assignment.githubapp.features.home.presentation.repositories.components.RepositoryItem
 import com.assignment.githubapp.ui.theme.OpenSansRegular_12_16
 import com.assignment.githubapp.ui.theme.Turquoise
+import io.realm.BuildConfig
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -56,6 +59,7 @@ fun RepositoriesMainScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.initValues()
+        Log.i(GitHubApp.TAG, BuildConfig.FLAVOR)
     }
 
     LaunchedEffect(key1 = Unit) {
