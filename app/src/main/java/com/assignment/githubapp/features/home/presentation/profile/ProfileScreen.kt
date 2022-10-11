@@ -133,10 +133,10 @@ fun ProfileScreen(
                     InfoItem(label = "Following", data = it.following.toString())
                     InfoItem(label = "Public repositories", data = it.publicRepositories.toString())
                     InfoItem(
-                        label = "Private repositories",
+                        label = "Private repositories left",
                         data = it.plan?.private_repos.toString()
                     )
-                    InfoItem(label = "Plan", data = it.plan?.name ?: "")
+                    InfoItem(label = "Plan", data = it.plan?.name?.uppercase() ?: "")
                     InfoItem(label = "Profile type", data = it.type ?: "")
                     InfoItem(label = "Collaborators", data = it.plan?.collaborators.toString())
                     InfoItem(label = "Free space", data = it.plan?.space.toString())
