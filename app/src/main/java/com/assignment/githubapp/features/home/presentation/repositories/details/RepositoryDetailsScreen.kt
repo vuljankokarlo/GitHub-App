@@ -27,6 +27,7 @@ import com.assignment.githubapp.R
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoryDetailsResponse
 import com.assignment.githubapp.common.data.models.response.OwnerResponse
 import com.assignment.githubapp.common.util.parseToPresentationFormat
+import com.assignment.githubapp.common.view.components.InfoItem
 import com.assignment.githubapp.features.home.presentation.repositories.components.SecondaryInfoItem
 import com.assignment.githubapp.ui.theme.*
 
@@ -225,31 +226,5 @@ fun RepositoryInfoSection(
                     }
             )
         }
-    }
-}
-
-@Composable
-fun InfoItem(
-    label: String,
-    data: String
-) {
-    Row(
-        modifier = Modifier
-            .padding(bottom = 10.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "$label: ",
-            style = MaterialTheme.typography.OpenSansBold_14_20,
-            color = MaterialTheme.colors.primary
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = data,
-            style = MaterialTheme.typography.OpenSansRegular_14_20,
-            color = MaterialTheme.colors.primary
-        )
     }
 }

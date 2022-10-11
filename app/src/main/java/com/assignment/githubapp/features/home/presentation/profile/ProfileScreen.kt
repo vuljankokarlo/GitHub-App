@@ -2,20 +2,26 @@ package com.assignment.githubapp.features.home.presentation.profile
 
 import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.assignment.githubapp.BuildConfig
 import com.assignment.githubapp.common.util.Util.Companion.FlavorType.FREE
+import com.assignment.githubapp.common.view.components.InfoItem
+import com.assignment.githubapp.ui.theme.OpenSansBold_14_20
 import com.assignment.githubapp.ui.theme.OpenSansBold_16_24
 import com.assignment.githubapp.ui.theme.OpenSansRegular_14_20
 import com.firebase.ui.auth.AuthUI
@@ -98,20 +104,70 @@ fun ProfileScreen(
         else
             viewModel.viewState.value.userInfo?.let {
                 Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp).padding(bottom = 50.dp)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Image(
+                        rememberAsyncImagePainter(it.avatar_url),
+                        contentDescription = "image",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .padding(top = viewModel.viewState.value.statusBarHeight.dp + 10.dp)
+                            .fillMaxWidth()
+                            .clip(CircleShape)
+                            .height(250.dp)
+                            .padding(bottom = 20.dp)
+                    )
                     Text(
-                        it.plan?.name ?: "",
+                        it.name ?: "",
                         style = MaterialTheme.typography.OpenSansBold_16_24,
                         color = MaterialTheme.colors.primary,
+                        textAlign = TextAlign.Center,
                         modifier = Modifier
-                            .clickable {
-                                auth.signOut()
-                                viewModel.signOut()
-                            }
+                            .padding(bottom = 20.dp)
+                            .fillMaxWidth()
                     )
+
+                    InfoItem(label = "Email", data = it.email ?: "Not provided")
+                    InfoItem(label = "Followers", data = it.followers.toString())
+                    InfoItem(label = "Following", data = it.following.toString())
+                    InfoItem(label = "Public repositories", data = it.publicRepositories.toString())
+                    InfoItem(
+                        label = "Private repositories",
+                        data = it.plan?.private_repos.toString()
+                    )
+                    InfoItem(label = "Plan", data = it.plan?.name ?: "")
+                    InfoItem(label = "Profile type", data = it.type ?: "")
+                    InfoItem(label = "Collaborators", data = it.plan?.collaborators.toString())
+                    InfoItem(label = "Free space", data = it.plan?.space.toString())
+                    InfoItem(label = "Disk usage", data = it.diskUsage.toString())
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Button(
+                        modifier = Modifier.padding(top = 30.dp),
+                        onClick = {
+                            auth.signOut()
+                            viewModel.signOut()
+                        },
+                        shape = CircleShape,
+                        elevation = ButtonDefaults.elevation(10.dp, 5.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.primary,
+                            contentColor = MaterialTheme.colors.background
+                        ),
+                        contentPadding = PaddingValues(20.dp)
+                    ) {
+                        Text(
+                            "Logout".uppercase(),
+                            style = MaterialTheme.typography.OpenSansBold_14_20,
+                            color = MaterialTheme.colors.background,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
     }

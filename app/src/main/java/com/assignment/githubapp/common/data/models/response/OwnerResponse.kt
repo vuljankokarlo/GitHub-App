@@ -21,6 +21,10 @@ data class OwnerResponse(
     val email: String? = null,
     @SerialName("name")
     val name: String? = null,
+    @SerialName("disk_usage")
+    val diskUsage: Int? = null,
+    @SerialName("type")
+    val type: String? = null,
     @SerialName("plan")
     val plan: PlanResponse? = null
 
