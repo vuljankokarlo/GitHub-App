@@ -27,8 +27,7 @@ import com.assignment.githubapp.BuildConfig
 import com.assignment.githubapp.R
 import com.assignment.githubapp.common.data.models.response.GitHubRepositoryResponse
 import com.assignment.githubapp.common.data.models.response.OwnerResponse
-import com.assignment.githubapp.common.util.Util
-import com.assignment.githubapp.common.util.Util.Companion.FlavorType.*
+import com.assignment.githubapp.common.util.Util.Companion.FlavorType.PAID
 import com.assignment.githubapp.common.util.parseToPresentationFormat
 import com.assignment.githubapp.ui.theme.OpenSansBold_14_20
 import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14

@@ -15,7 +15,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -29,7 +28,9 @@ import com.assignment.githubapp.common.data.models.response.OwnerResponse
 import com.assignment.githubapp.common.util.parseToPresentationFormat
 import com.assignment.githubapp.common.view.components.InfoItem
 import com.assignment.githubapp.features.home.presentation.repositories.components.SecondaryInfoItem
-import com.assignment.githubapp.ui.theme.*
+import com.assignment.githubapp.ui.theme.OpenSansBold_16_24
+import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14
+import com.assignment.githubapp.ui.theme.OpenSansRegular_14_20
 
 @Composable
 fun RepositoryDetailsScreen(
@@ -203,7 +204,9 @@ fun RepositoryInfoSection(
             InfoItem(label = "Created at", data = repository.updated_at.parseToPresentationFormat())
             InfoItem(label = "Language", data = repository.language)
             Row(
-                modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {

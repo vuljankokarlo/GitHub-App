@@ -3,7 +3,6 @@ package com.assignment.githubapp.common.global.domain.errorHandling.handler
 import com.assignment.githubapp.common.global.domain.errorHandling.ErrorHandler
 import com.assignment.githubapp.common.global.domain.errorHandling.model.ErrorModel
 import com.assignment.githubapp.di.NetworkModule
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import retrofit2.HttpException

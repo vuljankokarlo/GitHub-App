@@ -105,7 +105,8 @@ fun ProfileScreen(
             viewModel.viewState.value.userInfo?.let {
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = 20.dp).padding(bottom = 50.dp)
+                        .padding(horizontal = 20.dp)
+                        .padding(bottom = 50.dp)
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally

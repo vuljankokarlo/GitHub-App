@@ -31,7 +31,7 @@ private val PrimaryColorPalette = lightColors(
 @Composable
 fun GitHubAppTheme(isDarkTheme: Boolean, content: @Composable () -> Unit) {
     MaterialTheme(
-        colors = if(isDarkTheme) DarkColorPalette else PrimaryColorPalette,
+        colors = if (isDarkTheme) DarkColorPalette else PrimaryColorPalette,
         typography = Typography,
         shapes = Shapes,
     ) {

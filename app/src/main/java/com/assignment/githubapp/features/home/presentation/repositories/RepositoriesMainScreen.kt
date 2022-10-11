@@ -1,7 +1,6 @@
 package com.assignment.githubapp.features.home.presentation.repositories
 
 import android.net.Uri
-import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -22,11 +21,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.assignment.githubapp.BuildConfig.*
-import com.assignment.githubapp.GitHubApp
+import com.assignment.githubapp.BuildConfig.FLAVOR
 import com.assignment.githubapp.R
-import com.assignment.githubapp.common.util.Util
-import com.assignment.githubapp.common.util.Util.Companion.FlavorType.*
+import com.assignment.githubapp.common.util.Util.Companion.FlavorType.PAID
 import com.assignment.githubapp.common.util.isScrolledToTheEnd
 import com.assignment.githubapp.common.view.components.InputField
 import com.assignment.githubapp.common.view.components.TitleText
@@ -126,7 +123,7 @@ fun RepositoriesMainScreen(
                 )
             }
 
-            if(FLAVOR == PAID.toString()) {
+            if (FLAVOR == PAID.toString()) {
                 item {
                     InputField(
                         placeholder = "GitHub repository name".uppercase(),

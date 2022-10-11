@@ -32,7 +32,6 @@ import com.assignment.githubapp.features.home.domain.model.SheetContent.Empty
 import com.assignment.githubapp.features.home.domain.model.SheetContent.FabModal
 import com.assignment.githubapp.features.home.presentation.profile.ProfileScreen
 import com.assignment.githubapp.features.home.presentation.repositories.RepositoriesMainScreen
-import com.assignment.githubapp.features.home.presentation.repositories.RepositoriesViewModel
 import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14
 import com.assignment.githubapp.ui.theme.OpenSansRegular_14_20
 import com.assignment.githubapp.ui.theme.Turquoise

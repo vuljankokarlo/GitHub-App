@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import com.assignment.githubapp.ui.theme.LightGray
-import com.assignment.githubapp.ui.theme.OpenSansRegular_10_14
 import com.assignment.githubapp.ui.theme.OpenSansRegular_12_16
 import com.assignment.githubapp.ui.theme.Turquoise
 import kotlinx.coroutines.launch

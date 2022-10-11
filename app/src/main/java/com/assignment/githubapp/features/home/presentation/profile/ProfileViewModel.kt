@@ -3,7 +3,6 @@ package com.assignment.githubapp.features.home.presentation.profile
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.assignment.githubapp.common.global.GlobalRepository
 import com.assignment.githubapp.common.util.Resource
 import com.assignment.githubapp.common.view.presentation.BaseViewModel

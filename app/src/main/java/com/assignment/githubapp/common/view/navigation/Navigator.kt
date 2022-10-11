@@ -60,7 +60,10 @@ object Graphs {
                 route = "${RepositoryDetails()}{repositoryId}",
                 arguments = listOf(navArgument("repositoryId") { defaultValue = -1 })
             ) { backStackEntry ->
-                RepositoryDetailsScreen(navController, backStackEntry.arguments?.getInt("repositoryId")!!)
+                RepositoryDetailsScreen(
+                    navController,
+                    backStackEntry.arguments?.getInt("repositoryId")!!
+                )
             }
             composable(route = Profile()) { ProfileScreen(navController) }
         }
