@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -106,7 +105,7 @@ fun ProfileScreen(
                 Column(
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
-                        .padding(bottom = 50.dp)
+                        .padding(bottom = 100.dp)
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -117,9 +116,6 @@ fun ProfileScreen(
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             .padding(top = viewModel.viewState.value.statusBarHeight.dp + 10.dp)
-                            .fillMaxWidth()
-                            .clip(CircleShape)
-                            .height(250.dp)
                             .padding(bottom = 20.dp)
                     )
                     Text(
